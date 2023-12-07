@@ -941,6 +941,36 @@ You can toggle a layer's visibility with `setLayoutProperty`.
 
 <ToggleLayersMap />
 
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="https://js.radar.com/v4.1.11/radar.css" rel="stylesheet">
+    <script src="https://js.radar.com/v4.1.11/radar.min.js"></script>
+  </head>
+
+  <body>
+    <div id="map" style="width: 100%; height: 400px;" />
+
+    <script type="text/javascript">
+      Radar.initialize('prj_live_pk_...');
+
+      // create map
+      const map = new Radar.ui.map({
+        container: 'map',
+      });
+
+      map.on('load', () => {
+        // disable POI label layer
+        map.setLayoutProperty('poi-layer', 'visibility', 'none');
+      });
+    </script>
+  </body>
+</html>
+```
+
 ## Coverage
 
 Radar map data comes from [OpenStreetMap](https://www.openstreetmap.org).
