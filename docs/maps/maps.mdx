@@ -613,7 +613,7 @@ class MainActivity : AppCompatActivity() {
 
 Use the `fitBounds` function to center and zoom the map to encompass a specific area. 
 
-In the example below, clicking the map will place a new marker, and refit the map so all markers are visible.
+In the example below, clicking the map will place a new marker, and refit the map so all markers are visible. Clicking a marker will remove it.
 
 <FitBoundsMap />
 
@@ -638,7 +638,20 @@ In the example below, clicking the map will place a new marker, and refit the ma
         container: 'map',
       });
 
-      const markers = []; // keep track of markers
+      let markers = []; // keep track of markers
+
+      // function to refit the map to the markers
+      const refitMap = () => {
+        // get bounds for all markers
+        const bounds = new Radar.ui.maplibregl.LngLatBounds();
+        markers.forEach((m) => {
+          bounds.extend(m.getLngLat());
+        });
+
+        // fit map to new bounds
+        // (add padding to ensure pin is fully in view)
+        map.fitBounds(bounds, { maxZoom: 14, padding: 80 });
+      };
 
       map.on('click', (e) => {
         const { lng, lat } = e.lngLat;
@@ -649,16 +662,20 @@ In the example below, clicking the map will place a new marker, and refit the ma
           .addTo(map);
 
         markers.push(marker); // add to list of markers
+        refitMap();
 
-        // create bounds for each marker
-        const bounds = new Radar.ui.maplibregl.LngLatBounds();
-        markers.forEach((m) => {
-          bounds.extend(m.getLngLat());
+        // remove marker and refit map when clicked
+        marker.getElement().addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // remove marker from map and refit to remaining markers
+          const clicked = markers.find((m) => m.getElement().contains(e.target));
+          clicked.remove();
+          markers = markers.filter((m) => m !== clicked);
+          refitMap();
         });
-
-        // fit map to new bounds
-        // (add padding to ensure pin is fully in view)
-        map.fitBounds(bounds, { maxZoom: 14, padding: 80 });
+      });
     </script>
   </body>
 </html>
