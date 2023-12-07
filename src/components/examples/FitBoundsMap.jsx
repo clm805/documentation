@@ -41,7 +41,6 @@ class FitBoundsMap extends React.Component {
 
       // remove marker and refit map when clicked
       marker.getElement().addEventListener('click', (e) => {
-        e.preventDefault();
         e.stopPropagation();
 
         // remove marker from map and refit to remaining markers

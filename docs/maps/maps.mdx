@@ -666,7 +666,6 @@ In the example below, clicking the map will place a new marker, and refit the ma
 
         // remove marker and refit map when clicked
         marker.getElement().addEventListener('click', (e) => {
-          e.preventDefault();
           e.stopPropagation();
 
           // remove marker from map and refit to remaining markers
