@@ -104,11 +104,11 @@ Learn about platform-specific implementations of these presets in the [iOS SDK d
 To start tracking the user's location in the background, call one of:
 
 ```cs
-Radar.StartTracking(TrackingOptionsEfficient);
+Radar.StartTracking(Radar.TrackingOptionsEfficient);
 
-Radar.StartTracking(TrackingOptionsResponsive);
+Radar.StartTracking(Radar.TrackingOptionsResponsive);
 
-Radar.StartTracking(TrackingOptionsContinuous);
+Radar.StartTracking(Radar.TrackingOptionsContinuous);
 ```
 
 You only need to call these methods once, as these settings will be persisted across app sessions.
@@ -116,10 +116,10 @@ You only need to call these methods once, as these settings will be persisted ac
 Though we recommend using presets for most use cases, you can customize the tracking options. See the [tracking options reference](/sdk/tracking).
 
 ```cs
-RadarTrackingOptions trackingOptions = TrackingOptionsContinuous;
+RadarTrackingOptions trackingOptions = Radar.TrackingOptionsContinuous;
 trackingOptions.DesiredStoppedUpdateInterval = 180;
 trackingOptions.DesiredStoppedUpdateInterval = 60;
-trackingOptions.DesiredSyncUpdateInterval = 50;
+trackingOptions.DesiredSyncInterval = 50;
 trackingOptions.DesiredAccuracy = RadarTrackingOptionsDesiredAccuracy.High;
 trackingOptions.StopDuration = 140;
 trackingOptions.StopDistance = 70;
@@ -193,7 +193,7 @@ tripOptions.DestinationGeofenceExternalId = "123";
 tripOptions.Mode = RadarRouteMode.Car;
 
 Radar.StartTrip(tripOptions);
-Radar.StartTracking(TrackingOptionsContinuous);
+Radar.StartTracking(Radar.TrackingOptionsContinuous);
 ```
 
 Later, to complete the trip and stop tracking, call:
